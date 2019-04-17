@@ -4,8 +4,7 @@ import argparse
 import sys
 
 import requests
-
-import config
+import slack_token
 
 
 class SlackApi(object):
@@ -87,13 +86,14 @@ def main():
     """Get user email address from CLI input and deprovision from Slack
 
     :email: Required CLI Input
-    :token: Optional CLI Input default is imported from config file
+    :token: Optional CLI Input default is imported from slack_token file
     """
     parser = argparse.ArgumentParser(description='Deprovision Slack account.')
     parser.add_argument('-e', '--email', required=True, type=str,
                         help='Email address of user to be deprovisioned.')
-    parser.add_argument('-t', '--token', required=False, default=config.token,
-                        type=str, help='Slack API Token.')
+    parser.add_argument('-t', '--token', required=False,
+                        default=slack_token.token, type=str,
+                        help='Slack API Token.')
     args = parser.parse_args()
 
     slack = SlackApi(args.token)
@@ -102,3 +102,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
